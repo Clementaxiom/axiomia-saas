@@ -8,7 +8,7 @@ import { createClient } from '@/lib/supabase/client'
 import { Sidebar, Header } from '@/components/layout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui'
-import { Users, Calendar, TrendingUp, Clock, AlertTriangle } from 'lucide-react'
+import { Users, Calendar, TrendingUp, Clock, AlertTriangle, Phone } from 'lucide-react'
 import type { Restaurant, RestaurantSettings, Service, Reservation } from '@/lib/types/database'
 
 export default function DashboardPage() {
@@ -20,6 +20,7 @@ export default function DashboardPage() {
     const [settings, setSettings] = useState<RestaurantSettings | null>(null)
     const [services, setServices] = useState<Service[]>([])
     const [todayReservations, setTodayReservations] = useState<Reservation[]>([])
+    const [aiCallsCount, setAiCallsCount] = useState(0)
     const [loading, setLoading] = useState(true)
     const [userName, setUserName] = useState('')
 
@@ -70,6 +71,15 @@ export default function DashboardPage() {
                     .order('reservation_time', { ascending: true })
 
                 setTodayReservations(reservationsData || [])
+
+                // Get all AI voice reservations (for time saved stat)
+                const { count } = await supabase
+                    .from('reservations')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('restaurant_id', restaurantData.id)
+                    .eq('source', 'voice')
+
+                setAiCallsCount(count || 0)
             }
 
             setLoading(false)
@@ -135,7 +145,27 @@ export default function DashboardPage() {
                         </div>
 
                         {/* Stats Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+                            {/* AI Time Saved */}
+                            <Card className="bg-gradient-to-br from-indigo-500 to-purple-600 border-0">
+                                <CardContent>
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <p className="text-sm text-indigo-100">Temps gagné (IA)</p>
+                                            <p className="text-3xl font-bold text-white">
+                                                {Math.round(aiCallsCount * 2.5)} min
+                                            </p>
+                                            <p className="text-xs text-indigo-200 mt-1">
+                                                {aiCallsCount} appels traités
+                                            </p>
+                                        </div>
+                                        <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+                                            <Phone className="w-6 h-6 text-white" />
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
                             <Card>
                                 <CardContent>
                                     <div className="flex items-center justify-between">
