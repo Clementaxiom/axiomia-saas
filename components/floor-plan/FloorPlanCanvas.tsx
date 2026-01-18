@@ -162,7 +162,7 @@ export function FloorPlanCanvas({
         <>
             <div className="flex flex-col h-full">
                 {/* Stats & Controls */}
-                <div className="flex items-center justify-between p-4 bg-[var(--color-background)] border-b border-[var(--color-border)]">
+                <div className="flex items-center justify-between p-4 bg-slate-50 border-b border-slate-200 shadow-sm">
                     {/* Stats */}
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-2">
