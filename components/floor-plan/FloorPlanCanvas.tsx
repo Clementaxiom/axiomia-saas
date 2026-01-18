@@ -189,7 +189,7 @@ export function FloorPlanCanvas({
                     <div className="flex items-center gap-2">
                         {/* Add table button */}
                         <Button
-                            variant="accent"
+                            variant="primary"
                             size="sm"
                             icon={<Plus className="w-4 h-4" />}
                             onClick={() => setShowAddModal(true)}
