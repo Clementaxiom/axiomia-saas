@@ -11,7 +11,7 @@ SET
     surface_color = '#2a241e',           -- Warm dark card background
     text_color = '#f5f0e8',              -- Light cream text
     text_muted_color = '#a69d90',        -- Muted secondary text
-    border_color = 'rgba(201, 162, 39, 0.12)', -- Subtle gold border
+    border_color = '#3d3426', -- Subtle gold border (dark gold)
     
     -- Fonts - Elegant typography
     font_display = 'Cormorant Garamond, serif',

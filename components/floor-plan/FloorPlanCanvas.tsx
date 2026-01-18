@@ -125,10 +125,10 @@ export function FloorPlanCanvas({
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-[600px]" style={{ background: '#2a241e' }}>
+            <div className="flex items-center justify-center h-[600px] bg-[var(--color-surface)]">
                 <div className="flex flex-col items-center gap-3">
-                    <div className="w-8 h-8 border-2 border-amber-600 border-t-transparent rounded-full animate-spin" />
-                    <span className="text-sm" style={{ color: '#a69d90' }}>
+                    <div className="w-8 h-8 border-2 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" />
+                    <span className="text-sm text-[var(--color-text-muted)]">
                         Chargement du plan...
                     </span>
                 </div>
@@ -138,10 +138,10 @@ export function FloorPlanCanvas({
 
     if (error) {
         return (
-            <div className="flex items-center justify-center h-[600px]" style={{ background: '#2a241e' }}>
+            <div className="flex items-center justify-center h-[600px] bg-[var(--color-surface)]">
                 <div className="text-center">
-                    <p className="font-medium" style={{ color: '#a63d40' }}>{error}</p>
-                    <p className="text-sm mt-2" style={{ color: '#a69d90' }}>
+                    <p className="font-medium text-red-500">{error}</p>
+                    <p className="text-sm mt-2 text-[var(--color-text-muted)]">
                         Impossible de charger le plan de salle
                     </p>
                 </div>
@@ -159,107 +159,64 @@ export function FloorPlanCanvas({
 
     return (
         <>
-            <div className="flex flex-col h-full" style={{ background: '#1a1612' }}>
-                {/* Header / Controls - Ty Refuge Style */}
-                <div
-                    className="flex items-center justify-between px-6 py-4"
-                    style={{
-                        background: 'linear-gradient(180deg, #231e19, transparent)',
-                        borderBottom: '1px solid rgba(201, 162, 39, 0.12)'
-                    }}
-                >
+            <div className="flex flex-col h-full bg-[var(--color-background)]">
+                {/* Header / Controls */}
+                <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
                     {/* Stats Legend */}
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-2">
-                            <div
-                                className="w-3 h-3 rounded"
-                                style={{
-                                    background: 'rgba(201, 162, 39, 0.08)',
-                                    border: '2px solid rgba(201, 162, 39, 0.3)'
-                                }}
-                            />
-                            <span className="text-sm" style={{ color: '#a69d90' }}>
-                                Libres: <strong style={{ color: '#c9a227' }}>{stats.available}</strong>
+                            <div className="w-3 h-3 rounded bg-[var(--color-primary)] opacity-20 border-2 border-[var(--color-primary)]" />
+                            <span className="text-sm text-[var(--color-text-muted)]">
+                                Libres: <strong className="text-[var(--color-primary)]">{stats.available}</strong>
                             </span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div
-                                className="w-3 h-3 rounded"
-                                style={{
-                                    background: 'rgba(74, 124, 89, 0.15)',
-                                    border: '2px solid #4a7c59'
-                                }}
-                            />
-                            <span className="text-sm" style={{ color: '#a69d90' }}>
-                                Réservées: <strong style={{ color: '#6ab07a' }}>{stats.reserved}</strong>
+                            <div className="w-3 h-3 rounded bg-green-500 opacity-20 border-2 border-green-500" />
+                            <span className="text-sm text-[var(--color-text-muted)]">
+                                Réservées: <strong className="text-green-500">{stats.reserved}</strong>
                             </span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div
-                                className="w-3 h-3 rounded"
-                                style={{
-                                    background: 'rgba(184, 115, 51, 0.2)',
-                                    border: '2px solid #b87333'
-                                }}
-                            />
-                            <span className="text-sm" style={{ color: '#a69d90' }}>
-                                Occupées: <strong style={{ color: '#b87333' }}>{stats.occupied}</strong>
+                            <div className="w-3 h-3 rounded bg-[var(--color-accent)] opacity-20 border-2 border-[var(--color-accent)]" />
+                            <span className="text-sm text-[var(--color-text-muted)]">
+                                Occupées: <strong className="text-[var(--color-accent)]">{stats.occupied}</strong>
                             </span>
                         </div>
                     </div>
 
                     {/* Controls */}
                     <div className="flex items-center gap-3">
-                        {/* Add table button - Ty Refuge Primary Style */}
+                        {/* Add table button */}
                         <button
                             onClick={() => setShowAddModal(true)}
-                            className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5"
-                            style={{
-                                background: 'linear-gradient(135deg, #c9a227, #b87333)',
-                                color: '#1a1612',
-                                boxShadow: '0 4px 20px rgba(201, 162, 39, 0.3)',
-                            }}
+                            className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 bg-[var(--color-primary)] text-[var(--color-background)] hover:bg-[var(--color-primary-hover)]"
+                            style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)' }}
                         >
                             <Plus className="w-4 h-4" />
                             Ajouter une table
                         </button>
 
-                        <div className="w-px h-6 mx-2" style={{ background: 'rgba(201, 162, 39, 0.25)' }} />
+                        <div className="w-px h-6 mx-2 bg-[var(--color-border)]" />
 
                         {/* Zoom Controls */}
                         <button
                             onClick={handleZoomOut}
-                            className="p-2 rounded-lg transition-all duration-300"
-                            style={{
-                                background: '#2a241e',
-                                border: '1px solid rgba(201, 162, 39, 0.12)',
-                                color: '#a69d90'
-                            }}
+                            className="p-2 rounded-lg transition-all duration-300 bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-primary)]"
                         >
                             <ZoomOut className="w-4 h-4" />
                         </button>
-                        <span className="w-12 text-center text-sm" style={{ color: '#a69d90' }}>
+                        <span className="w-12 text-center text-sm text-[var(--color-text-muted)]">
                             {Math.round(zoom * 100)}%
                         </span>
                         <button
                             onClick={handleZoomIn}
-                            className="p-2 rounded-lg transition-all duration-300"
-                            style={{
-                                background: '#2a241e',
-                                border: '1px solid rgba(201, 162, 39, 0.12)',
-                                color: '#a69d90'
-                            }}
+                            className="p-2 rounded-lg transition-all duration-300 bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-primary)]"
                         >
                             <ZoomIn className="w-4 h-4" />
                         </button>
                         <button
                             onClick={handleZoomReset}
-                            className="p-2 rounded-lg transition-all duration-300 ml-1"
-                            style={{
-                                background: '#2a241e',
-                                border: '1px solid rgba(201, 162, 39, 0.12)',
-                                color: '#a69d90'
-                            }}
+                            className="p-2 rounded-lg transition-all duration-300 ml-1 bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-primary)]"
                         >
                             <Maximize2 className="w-4 h-4" />
                         </button>
@@ -267,9 +224,9 @@ export function FloorPlanCanvas({
                 </div>
 
                 {/* Canvas */}
-                <div className="flex-1 overflow-auto p-6" style={{ background: '#1a1612' }}>
+                <div className="flex-1 overflow-auto p-6 bg-[var(--color-background)]">
                     <div
-                        className="relative rounded-2xl"
+                        className="relative rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border)]"
                         style={{
                             width: `${800 * zoom}px`,
                             height: `${600 * zoom}px`,
@@ -277,8 +234,6 @@ export function FloorPlanCanvas({
                             transformOrigin: 'top left',
                             minWidth: `${800}px`,
                             minHeight: `${600}px`,
-                            background: '#2a241e',
-                            border: '1px solid rgba(201, 162, 39, 0.12)',
                         }}
                     >
                         {/* Grid pattern background */}
@@ -286,9 +241,9 @@ export function FloorPlanCanvas({
                             className="absolute inset-0 opacity-5 rounded-2xl"
                             style={{
                                 backgroundImage: `
-                linear-gradient(to right, rgba(201, 162, 39, 0.3) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(201, 162, 39, 0.3) 1px, transparent 1px)
-              `,
+                                    linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+                                    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px)
+                                `,
                                 backgroundSize: '40px 40px',
                             }}
                         />
@@ -306,8 +261,8 @@ export function FloorPlanCanvas({
                         {/* Empty state */}
                         {(!data?.tables || data.tables.length === 0) && (
                             <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="text-center" style={{ color: '#6b6358' }}>
-                                    <p className="font-medium text-lg" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                                <div className="text-center text-[var(--color-text-muted)]">
+                                    <p className="font-medium text-lg" style={{ fontFamily: 'var(--font-display)' }}>
                                         Aucune table configurée
                                     </p>
                                     <p className="text-sm mt-2">
@@ -320,53 +275,26 @@ export function FloorPlanCanvas({
                 </div>
             </div>
 
-            {/* Add Table Modal - Ty Refuge Style */}
+            {/* Add Table Modal */}
             {showAddModal && (
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center"
-                    style={{
-                        background: 'rgba(0, 0, 0, 0.7)',
-                        backdropFilter: 'blur(8px)'
-                    }}
-                >
-                    <div
-                        className="w-[420px] rounded-2xl overflow-hidden relative"
-                        style={{
-                            background: '#2a241e',
-                            border: '1px solid rgba(201, 162, 39, 0.25)',
-                            boxShadow: '0 25px 80px rgba(0, 0, 0, 0.6)',
-                        }}
-                    >
-                        {/* Golden top accent */}
-                        <div
-                            className="absolute top-0 left-0 right-0 h-1"
-                            style={{ background: 'linear-gradient(90deg, #c9a227, #b87333, #c9a227)' }}
-                        />
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+                    <div className="w-[420px] rounded-2xl overflow-hidden relative bg-[var(--color-surface)] border border-[var(--color-border)]" style={{ boxShadow: '0 25px 80px rgba(0, 0, 0, 0.6)' }}>
+                        {/* Top accent */}
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-primary)]" />
 
                         {/* Header */}
                         <div className="flex justify-between items-start p-7 pb-5">
                             <div>
-                                <h2
-                                    className="text-2xl font-semibold"
-                                    style={{
-                                        fontFamily: "'Cormorant Garamond', serif",
-                                        color: '#f5f0e8'
-                                    }}
-                                >
+                                <h2 className="text-2xl font-semibold text-[var(--color-text)]" style={{ fontFamily: 'var(--font-display)' }}>
                                     Ajouter une table
                                 </h2>
-                                <p className="text-sm mt-1" style={{ color: '#a69d90' }}>
+                                <p className="text-sm mt-1 text-[var(--color-text-muted)]">
                                     Configurez les détails de la nouvelle table
                                 </p>
                             </div>
                             <button
                                 onClick={() => setShowAddModal(false)}
-                                className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300"
-                                style={{
-                                    background: '#231e19',
-                                    border: '1px solid rgba(201, 162, 39, 0.12)',
-                                    color: '#a69d90'
-                                }}
+                                className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 bg-[var(--color-background)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-primary)]"
                             >
                                 <X className="w-4 h-4" />
                             </button>
@@ -376,10 +304,7 @@ export function FloorPlanCanvas({
                         <div className="px-7 pb-7 space-y-5">
                             {/* Table Number */}
                             <div>
-                                <label
-                                    className="block text-xs font-semibold uppercase tracking-wider mb-3"
-                                    style={{ color: '#6b6358', letterSpacing: '0.15em' }}
-                                >
+                                <label className="block text-xs font-semibold uppercase tracking-wider mb-3 text-[var(--color-text-muted)]">
                                     Numéro de table
                                 </label>
                                 <input
@@ -387,22 +312,14 @@ export function FloorPlanCanvas({
                                     placeholder="ex: T1, 12, VIP..."
                                     value={newTable.tableNumber}
                                     onChange={(e) => setNewTable({ ...newTable, tableNumber: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl text-sm transition-all duration-300 focus:outline-none"
-                                    style={{
-                                        background: '#231e19',
-                                        border: '1px solid rgba(201, 162, 39, 0.12)',
-                                        color: '#f5f0e8',
-                                    }}
+                                    className="w-full px-4 py-3 rounded-xl text-sm transition-all duration-300 focus:outline-none bg-[var(--color-background)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-primary)]"
                                 />
                             </div>
 
                             {/* Capacities */}
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label
-                                        className="block text-xs font-semibold uppercase tracking-wider mb-3"
-                                        style={{ color: '#6b6358', letterSpacing: '0.15em' }}
-                                    >
+                                    <label className="block text-xs font-semibold uppercase tracking-wider mb-3 text-[var(--color-text-muted)]">
                                         Capacité min
                                     </label>
                                     <input
@@ -410,19 +327,11 @@ export function FloorPlanCanvas({
                                         min={1}
                                         value={newTable.minCapacity}
                                         onChange={(e) => setNewTable({ ...newTable, minCapacity: parseInt(e.target.value) || 1 })}
-                                        className="w-full px-4 py-3 rounded-xl text-sm transition-all duration-300 focus:outline-none"
-                                        style={{
-                                            background: '#231e19',
-                                            border: '1px solid rgba(201, 162, 39, 0.12)',
-                                            color: '#f5f0e8',
-                                        }}
+                                        className="w-full px-4 py-3 rounded-xl text-sm transition-all duration-300 focus:outline-none bg-[var(--color-background)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-primary)]"
                                     />
                                 </div>
                                 <div>
-                                    <label
-                                        className="block text-xs font-semibold uppercase tracking-wider mb-3"
-                                        style={{ color: '#6b6358', letterSpacing: '0.15em' }}
-                                    >
+                                    <label className="block text-xs font-semibold uppercase tracking-wider mb-3 text-[var(--color-text-muted)]">
                                         Capacité max
                                     </label>
                                     <input
@@ -430,22 +339,14 @@ export function FloorPlanCanvas({
                                         min={1}
                                         value={newTable.maxCapacity}
                                         onChange={(e) => setNewTable({ ...newTable, maxCapacity: parseInt(e.target.value) || 4 })}
-                                        className="w-full px-4 py-3 rounded-xl text-sm transition-all duration-300 focus:outline-none"
-                                        style={{
-                                            background: '#231e19',
-                                            border: '1px solid rgba(201, 162, 39, 0.12)',
-                                            color: '#f5f0e8',
-                                        }}
+                                        className="w-full px-4 py-3 rounded-xl text-sm transition-all duration-300 focus:outline-none bg-[var(--color-background)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-primary)]"
                                     />
                                 </div>
                             </div>
 
                             {/* Shape */}
                             <div>
-                                <label
-                                    className="block text-xs font-semibold uppercase tracking-wider mb-3"
-                                    style={{ color: '#6b6358', letterSpacing: '0.15em' }}
-                                >
+                                <label className="block text-xs font-semibold uppercase tracking-wider mb-3 text-[var(--color-text-muted)]">
                                     Forme
                                 </label>
                                 <div className="grid grid-cols-3 gap-2">
@@ -458,16 +359,10 @@ export function FloorPlanCanvas({
                                             key={option.value}
                                             type="button"
                                             onClick={() => setNewTable({ ...newTable, shape: option.value as any })}
-                                            className="py-3 px-4 rounded-xl text-sm font-medium transition-all duration-300"
-                                            style={{
-                                                background: newTable.shape === option.value
-                                                    ? 'linear-gradient(135deg, rgba(201, 162, 39, 0.2), rgba(201, 162, 39, 0.1))'
-                                                    : '#231e19',
-                                                border: newTable.shape === option.value
-                                                    ? '1px solid #c9a227'
-                                                    : '1px solid rgba(201, 162, 39, 0.12)',
-                                                color: newTable.shape === option.value ? '#c9a227' : '#a69d90',
-                                            }}
+                                            className={`py-3 px-4 rounded-xl text-sm font-medium transition-all duration-300 border ${newTable.shape === option.value
+                                                    ? 'bg-[var(--color-primary)] bg-opacity-20 border-[var(--color-primary)] text-[var(--color-primary)]'
+                                                    : 'bg-[var(--color-background)] border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-[var(--color-primary)]'
+                                                }`}
                                         >
                                             {option.label}
                                         </button>
@@ -476,33 +371,22 @@ export function FloorPlanCanvas({
                             </div>
 
                             {/* Divider */}
-                            <div
-                                className="h-px my-6"
-                                style={{ background: 'linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.25), transparent)' }}
-                            />
+                            <div className="h-px my-6 bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
 
                             {/* Actions */}
                             <div className="flex gap-3 justify-end">
                                 <button
                                     onClick={() => setShowAddModal(false)}
                                     disabled={isAdding}
-                                    className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300"
-                                    style={{
-                                        background: 'transparent',
-                                        color: '#a69d90',
-                                    }}
+                                    className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
                                 >
                                     Annuler
                                 </button>
                                 <button
                                     onClick={handleAddTable}
                                     disabled={!newTable.tableNumber.trim() || isAdding}
-                                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    style={{
-                                        background: 'linear-gradient(135deg, #c9a227, #b87333)',
-                                        color: '#1a1612',
-                                        boxShadow: '0 4px 20px rgba(201, 162, 39, 0.3)',
-                                    }}
+                                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed bg-[var(--color-primary)] text-[var(--color-background)] hover:bg-[var(--color-primary-hover)]"
+                                    style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)' }}
                                 >
                                     {isAdding ? (
                                         <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
