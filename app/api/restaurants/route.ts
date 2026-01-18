@@ -132,3 +132,35 @@ export async function POST(req: NextRequest) {
         )
     }
 }
+
+export async function DELETE(req: NextRequest) {
+    try {
+        const { searchParams } = new URL(req.url)
+        const restaurantId = searchParams.get('id')
+
+        if (!restaurantId) {
+            return NextResponse.json(
+                { error: 'Missing restaurant ID' },
+                { status: 400 }
+            )
+        }
+
+        const supabase = createServiceClient()
+
+        // Delete restaurant (cascades to related tables via FK constraints)
+        const { error } = await supabase
+            .from('restaurants')
+            .delete()
+            .eq('id', restaurantId)
+
+        if (error) throw error
+
+        return NextResponse.json({ success: true })
+    } catch (error) {
+        console.error('Restaurants DELETE error:', error)
+        return NextResponse.json(
+            { error: error instanceof Error ? error.message : 'Internal server error' },
+            { status: 500 }
+        )
+    }
+}

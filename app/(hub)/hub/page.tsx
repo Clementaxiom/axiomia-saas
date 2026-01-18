@@ -109,7 +109,11 @@ export default function HubPage() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {filteredRestaurants.map((restaurant) => (
-                            <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+                            <RestaurantCard
+                                key={restaurant.id}
+                                restaurant={restaurant}
+                                onDelete={(id) => setRestaurants((prev) => prev.filter((r) => r.id !== id))}
+                            />
                         ))}
                     </div>
                 )}
